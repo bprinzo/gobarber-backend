@@ -1,4 +1,5 @@
 import { Response, Request } from 'express';
+import { classToClass } from 'class-transformer';
 
 import { container } from 'tsyringe';
 
@@ -13,15 +14,6 @@ export default class UsersAvatarController {
       avatarFileName: request.file.filename,
     });
 
-    const userWithOutPassword = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      createdAt: user.created_at,
-      updatedAt: user.updated_at,
-    };
-
-    return response.json({ user: userWithOutPassword });
+    return response.json({ user: classToClass(user) });
   }
 }

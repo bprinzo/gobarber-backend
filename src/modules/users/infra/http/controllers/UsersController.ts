@@ -1,4 +1,5 @@
 import { Response, Request } from 'express';
+import { classToClass } from 'class-transformer';
 
 import { container } from 'tsyringe';
 
@@ -12,15 +13,6 @@ export default class UsersController {
 
     const user = await createUser.execute({ name, email, password });
 
-    const userWithOutPassword = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      createdAt: user.created_at,
-      updatedAt: user.updated_at,
-    };
-
-    return response.json(userWithOutPassword);
+    return response.json(classToClass(user));
   }
 }
